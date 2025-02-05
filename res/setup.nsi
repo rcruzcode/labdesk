@@ -11,7 +11,7 @@
 ####################################################################
 # File Info
 
-!define PRODUCT_NAME "RustDesk"
+!define PRODUCT_NAME "LabDesk"
 !define PRODUCT_DESCRIPTION "Installer for ${PRODUCT_NAME}"
 !define COPYRIGHT "Copyright © 2021"
 !define VERSION "1.1.6"
@@ -27,7 +27,7 @@ VIAddVersionKey "FileVersion" "${VERSION}.0"
 # Installer Attributes
 
 Name "${PRODUCT_NAME}"
-Outfile "rustdesk-${VERSION}-setup.exe"
+Outfile "labdesk-${VERSION}-setup.exe"
 Caption "Setup - ${PRODUCT_NAME}"
 BrandingText "${PRODUCT_NAME}"
 
@@ -47,7 +47,7 @@ InstallDir "$PROGRAMFILES64\${PRODUCT_NAME}"
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "Create desktop shortcut"
 !define MUI_FINISHPAGE_SHOWREADME_FUNCTION CreateDesktopShortcut
-!define MUI_FINISHPAGE_RUN "$INSTDIR\${PRODUCT_NAME}.exe"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\labdesk.exe"
 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -132,29 +132,29 @@ Section "Install"
   SetOutPath $INSTDIR
 
   # Regkeys
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayIcon" "$INSTDIR\${PRODUCT_NAME}.exe"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayIcon" "$INSTDIR\labdesk.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME} (x64)"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayVersion" "${VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "UninstallString" '"$INSTDIR\${PRODUCT_NAME}.exe" --uninstall'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "UninstallString" '"$INSTDIR\labdesk.exe" --uninstall'
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "Publisher" "Purslane Ltd."
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "HelpLink" "https://www.rustdesk.com/"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "URLInfoAbout" "https://www.rustdesk.com/"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "URLInfoAbout" "https://www.labchecap.com.br/"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "URLUpdateInfo" "https://www.rustdesk.com/"
 
-  nsExec::Exec "taskkill /F /IM ${PRODUCT_NAME}.exe"
+  nsExec::Exec "taskkill /F /IM labdesk.exe"
   Sleep 500 ; Give time for process to be completely killed
-  File "${PRODUCT_NAME}.exe"
+  File "labdesk.exe"
 
   SetShellVarContext all
-  CreateShortCut "$INSTDIR\Uninstall ${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "--uninstall" "msiexec.exe"
+  CreateShortCut "$INSTDIR\Uninstall ${PRODUCT_NAME}.lnk" "$INSTDIR\labdesk.exe" "--uninstall" "msiexec.exe"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall ${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "--uninstall" "msiexec.exe"
-  CreateShortCut "$SMSTARTUP\${PRODUCT_NAME} Tray.lnk" "$INSTDIR\${PRODUCT_NAME}.exe" "--tray"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\labdesk.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall ${PRODUCT_NAME}.lnk" "$INSTDIR\labdesk.exe" "--uninstall" "msiexec.exe"
+  CreateShortCut "$SMSTARTUP\${PRODUCT_NAME} Tray.lnk" "$INSTDIR\labdesk.exe" "--tray"
   
-  nsExec::Exec 'sc create ${PRODUCT_NAME} start=auto DisplayName="${PRODUCT_NAME} Service" binPath= "\"$INSTDIR\${PRODUCT_NAME}.exe\" --service"'
-  nsExec::Exec 'netsh advfirewall firewall add rule name="${PRODUCT_NAME} Service" dir=in action=allow program="$INSTDIR\${PRODUCT_NAME}.exe" enable=yes'
+  nsExec::Exec 'sc create ${PRODUCT_NAME} start=auto DisplayName="${PRODUCT_NAME} Service" binPath= "\"$INSTDIR\labdesk.exe\" --service"'
+  nsExec::Exec 'netsh advfirewall firewall add rule name="${PRODUCT_NAME} Service" dir=in action=allow program="$INSTDIR\labdesk.exe" enable=yes'
   nsExec::Exec 'sc start ${PRODUCT_NAME}'
 SectionEnd
 
@@ -174,5 +174,5 @@ Function .onInit
 FunctionEnd
 
 Function CreateDesktopShortcut
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_NAME}.exe"
+  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\labdesk.exe"
 FunctionEnd
