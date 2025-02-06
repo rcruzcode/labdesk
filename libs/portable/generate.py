@@ -72,7 +72,7 @@ def build_portable(output_folder: str, target: str):
         os.system("cargo build --release")
 
 # Linux: python3 generate.py -f ../rustdesk-portable-packer/test -o . -e ./test/main.py
-# Windows: python3 .\generate.py -f ..\rustdesk\flutter\build\windows\runner\Debug\ -o . -e ..\rustdesk\flutter\build\windows\runner\Debug\rustdesk.exe
+# Windows: python3 .\generate.py -f ..\rustdesk\flutter\build\windows\runner\Debug\ -o . -e ..\rustdesk\flutter\build\windows\runner\Debug\labdesk.exe
 
 
 if __name__ == '__main__':
@@ -91,7 +91,8 @@ if __name__ == '__main__':
     folder = options.folder or './rustdesk'
     output_folder = os.path.abspath(options.output_folder or './')
 
-    options.executable = 'labdesk.exe'
+    if not options.executable:
+        options.executable = 'labdesk.exe'
     if not options.executable.startswith(folder):
         options.executable = folder + '/' + options.executable
     exe: str = os.path.abspath(options.executable)
