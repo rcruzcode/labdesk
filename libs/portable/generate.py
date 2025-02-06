@@ -88,11 +88,10 @@ if __name__ == '__main__':
     parser.add_option("-l", "--level", dest="level", type="int",
                       help="compression level, default is 11, highest", default=11)
     (options, args) = parser.parse_args()
-    folder = options.folder or './rustdesk'
+    folder = './labdesk'
     output_folder = os.path.abspath(options.output_folder or './')
 
-    if not options.executable:
-        options.executable = 'labdesk.exe'
+    options.executable = 'labdesk.exe'
     if not options.executable.startswith(folder):
         options.executable = folder + '/' + options.executable
     exe: str = os.path.abspath(options.executable)
